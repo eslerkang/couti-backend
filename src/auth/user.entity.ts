@@ -1,8 +1,14 @@
-import { TimeEntity } from 'src/util/time.entity';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  BaseEntity,
+  Column,
+  CreateDateColumn,
+  Entity,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 
 @Entity({ name: 'users' })
-export class User extends TimeEntity {
+export class User extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -23,4 +29,10 @@ export class User extends TimeEntity {
     default: false,
   })
   deleted: boolean;
+
+  @CreateDateColumn()
+  createAt: Date;
+
+  @UpdateDateColumn()
+  updatedAt: Date;
 }
