@@ -37,7 +37,7 @@ export class AuthService {
         }
       }
     }
-    const payload = { id: user.id, accessToken: userKakaoDto.accessToken };
+    const payload = { id: user.id };
     const accessToken = await this.jwtService.sign(payload);
     return { accessToken };
   }

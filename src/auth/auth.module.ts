@@ -7,12 +7,14 @@ import * as config from 'config';
 import { KakaoStrategy } from './kakao.strategy';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { JwtStrategy } from './jwt.strategy';
+import { PassportModule } from '@nestjs/passport';
 
 const jwtConfig = config.get('jwt');
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([UserRepository]),
+    PassportModule.register({ defaultStrategy: 'jwt' }),
     JwtModule.register({
       secret: process.env.JWT_SECRET || jwtConfig.secret,
       signOptions: {
