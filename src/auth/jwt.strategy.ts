@@ -4,7 +4,6 @@ import * as config from 'config';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserRepository } from './user.repository';
 import { UnauthorizedException } from '@nestjs/common';
-import { UserWithAccessTokenDto } from './dto/user.with.accessToken.dto';
 import { User } from './user.entity';
 
 const jwtConfig = config.get('jwt');
@@ -20,15 +19,11 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   }
 
   async validate(payload) {
-    const { id, accessToken } = payload;
+    const { id } = payload;
     const user: User = await this.userRepository.findOne(id);
     if (!user) {
       throw new UnauthorizedException('InvalidToken');
     }
-    const userWithAccessToken: UserWithAccessTokenDto = {
-      ...user,
-      accessToken,
-    };
-    return userWithAccessToken;
+    return user;
   }
 }
